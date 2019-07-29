@@ -22,7 +22,7 @@ public class DarkDustFrame extends JFrame{
     
     public DarkDustFrame(){
         this.setTitle("Dark Dust");
-        this.setSize(1280, 720);
+        this.setSize(1280, 720);            //size
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setVisible(true);
     }
