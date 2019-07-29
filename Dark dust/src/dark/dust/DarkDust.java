@@ -3,6 +3,7 @@
  */
 package dark.dust;
 
+import java.awt.Canvas;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
@@ -17,13 +18,7 @@ public class DarkDust {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        JFrame application = new JFrame("Dark Dust");
-        
-        application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        
-        application.setSize(1280, 720);
-        
-        application.setVisible(true);
+        DarkDustFrame f = new DarkDustFrame();
     }
     
 }
