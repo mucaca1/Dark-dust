@@ -5,6 +5,9 @@
  */
 package components;
 
+import com.sun.javafx.geom.Vec2d;
+
+
 /**
  *
  * @author Matej
@@ -14,7 +17,10 @@ public class ItemToEscapeCard extends DefaultTerrainCard{
     
     private TypeOfCardEnum type;                  //Urcuje konkretny typ karty
 
-    public ItemToEscapeCard() {
+    public ItemToEscapeCard(TypeOfCardEnum type, DirectionEnum direction, Vec2d vector){
+        super(type, direction, vector);
+        this.type = type;
+        this.direction = direction;
     }
     
     public void paint(){
