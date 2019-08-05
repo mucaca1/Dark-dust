@@ -3,6 +3,7 @@
  */
 package dark.dust;
 
+import frames.DarkDustFrame;
 import java.awt.Canvas;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;

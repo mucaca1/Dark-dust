@@ -5,12 +5,17 @@
  */
 package components;
 
+import com.sun.javafx.geom.Vec2d;
+
 /**
  *
  * @author Matej
  */
 public class ItemToHelpCard extends DefaultTerrainCard{
     private TypeOfCardEnum type;       //Typ karty
-    
-    private boolean isCave;         //Ci poskytuje karta ukryt
+
+    public ItemToHelpCard(TypeOfCardEnum type, Vec2d vector) {
+        super(type, null, vector);
+        this.type = type;
+    }
 }

@@ -9,15 +9,12 @@ package components;
  *
  * @author Matej
  */
-public enum TypeOfCardEnum {
-    Water,
-    FakeWater,
-    Components,
-    Cave,
-    Exit,
-    Start,
-    Engine,
-    Helm,
-    Propeller,
-    Compass
+public class StaticSettings {
+    public static String getPathToPhotos(){
+        return "src\\Imges\\BoardGameCards";
+    }
+    
+    public static boolean isVisiableAllCards(){
+        return false;
+    }
 }

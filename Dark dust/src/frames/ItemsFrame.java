@@ -3,17 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dark.dust;
-
-import java.awt.Canvas;
-import java.awt.Graphics;
+package frames;
 
 /**
  *
  * @author Matej
  */
-public class DesertCanvas extends Canvas{
-    public void paint(Graphics g){
-        
-    }
+public class ItemsFrame {
+    
 }
