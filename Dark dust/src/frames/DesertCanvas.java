@@ -11,92 +11,39 @@ import components.DirectionEnum;
 import components.ItemToEscapeCard;
 import components.ItemToHelpCard;
 import components.TypeOfCardEnum;
+import controls.GameController;
 import controls.Pair;
 import java.awt.Canvas;
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
+import characters.Character;
 
 /**
  *
  * @author Matej
  */
-public class DesertCanvas extends Canvas{
-    private ArrayList<DefaultTerrainCard> terrain;
-
-    public DesertCanvas() {
+public class DesertCanvas extends Canvas implements MouseListener, MouseMotionListener{
+    private GameController gc;
+    
+    private DefaultTerrainCard selectedTerrain;
+    
+    public DesertCanvas(GameController gc) {
         super();
-        terrain = new ArrayList<>();
-        
-        startInit();
+        addMouseListener(this);
+        addMouseMotionListener(this);
+        this.gc = gc;
+        this.selectedTerrain = null;
     }
-    
-    public void startInit(){
-        Random randomGenerator = new Random();
 
-        int[] a={0,1,2,3,4};
-        int[] b={0,1,2,3,4};
-
-        ArrayList<Pair> pairs = new ArrayList<Pair>();
-        
-        for (int i = 0; i < a.length; i++) {
-            for (int j = 0; j < b.length; j++) {
-                pairs.add(new Pair(a[i], b[j]));
-            }
-        }
-        Collections.shuffle(pairs);
-        
-        terrain.add(new ItemToHelpCard(TypeOfCardEnum.Cave, null));
-        terrain.add(new ItemToHelpCard(TypeOfCardEnum.Cave, null));
-        
-        terrain.add(new ItemToEscapeCard(TypeOfCardEnum.Compass, DirectionEnum.Horizontal, null));
-        terrain.add(new ItemToEscapeCard(TypeOfCardEnum.Compass, DirectionEnum.Vertical, null));
-        
-        terrain.add(new ItemToEscapeCard(TypeOfCardEnum.Engine, DirectionEnum.Horizontal, null));
-        terrain.add(new ItemToEscapeCard(TypeOfCardEnum.Engine, DirectionEnum.Vertical, null));
-        
-        terrain.add(new ItemToEscapeCard(TypeOfCardEnum.Helm, DirectionEnum.Horizontal, null));
-        terrain.add(new ItemToEscapeCard(TypeOfCardEnum.Helm, DirectionEnum.Vertical, null));
-        
-        terrain.add(new ItemToEscapeCard(TypeOfCardEnum.Propeller, DirectionEnum.Horizontal, null));
-        terrain.add(new ItemToEscapeCard(TypeOfCardEnum.Propeller, DirectionEnum.Vertical, null));
-        
-        terrain.add(new ItemToEscapeCard(TypeOfCardEnum.Start, DirectionEnum.None, null));
-        terrain.add(new ItemToEscapeCard(TypeOfCardEnum.Exit, DirectionEnum.None, null));
-        
-        terrain.add(new ItemToHelpCard(TypeOfCardEnum.Water, null));
-        terrain.add(new ItemToHelpCard(TypeOfCardEnum.FakeWater, null));
-        terrain.add(new ItemToHelpCard(TypeOfCardEnum.FakeWater, null));
-        
-        for (int i = 0; i < 10; i++) {
-            terrain.add(new ItemToHelpCard(TypeOfCardEnum.Components, null));
-        }
-        
-        System.out.println("Terrain count: " + terrain.size());
-        int i = 0;
-        System.out.println(pairs.size());
-        for(DefaultTerrainCard t : terrain){
-            
-            Pair p = pairs.get(i);
-            System.out.println(i + " [X: " + p.getX() + ", Y: " + p.getY() + "]");
-            if(!(p.getX() == 2 && p.getY() == 2)){
-                t.setXY(new Vec2d((double)p.getX(), (double)p.getY()));
-            }
-            
-            i++;
-        }
-    }
-    
-    public void endGame(){
-        terrain.clear();
-    }
-    
-    
-    
     public void paint(Graphics g){
         System.out.println("W: " + getWidth() + " H: " + getHeight());
         int maxSize;
@@ -106,8 +53,70 @@ public class DesertCanvas extends Canvas{
         else{
             maxSize = getWidth()/5;
         }
-        for(DefaultTerrainCard t : terrain){
-            t.paint(g,maxSize + 5 , maxSize);
+        for(DefaultTerrainCard t : gc.getTerrain()){
+            t.paint(g,maxSize, maxSize-5);
+            if(t.equals(selectedTerrain)){
+                g.setColor(Color.green);
+                g.drawLine(t.getPosX()*maxSize, t.getPosY()*maxSize, t.getPosX()*maxSize + maxSize - 5, t.getPosY()*maxSize + maxSize - 5);
+            }
         }
+        for(Character c : gc.getPlayers()){
+            c.paint(g, maxSize);
+        }
+    }    
+
+    @Override
+    public void mouseClicked(MouseEvent me) {
+        int x = me.getX();
+        int y = me.getY();
+        
+        int maxSize;
+        if(getWidth() > getHeight()){
+            maxSize = getHeight()/5;
+        }
+        else{
+            maxSize = getWidth()/5;
+        }
+        this.selectedTerrain = null;
+        for(DefaultTerrainCard t : gc.getTerrain()){
+            if(x > t.getPosX()*maxSize && x < ((t.getPosX()*maxSize) + maxSize - 5)
+                    && y >= t.getPosY()*maxSize && y <= (t.getPosY()*maxSize + maxSize - 5)){
+                System.out.println(t.toString());
+                this.selectedTerrain = t;
+            }
+        }
+        System.out.println(maxSize);
+        System.out.println(me.paramString());
+        this.repaint();
+    }
+
+    @Override
+    public void mousePressed(MouseEvent me) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent me) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent me) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseExited(MouseEvent me) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent me) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent me) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

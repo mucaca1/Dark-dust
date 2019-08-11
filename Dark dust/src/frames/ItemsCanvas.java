@@ -9,6 +9,6 @@ package frames;
  *
  * @author Matej
  */
-public class ItemsFrame {
+public class ItemsCanvas {
     
 }

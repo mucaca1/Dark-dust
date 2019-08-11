@@ -121,4 +121,16 @@ public abstract class DefaultTerrainCard {
         this.posX = (int) vector.x;
         this.posY = (int) vector.y;
     }
+
+    public int getPosX() {
+        return posX;
+    }
+
+    public int getPosY() {
+        return posY;
+    }
+    
+    public String toString(){
+        return "Terrain card,(x:" + posX + ",y:" + posY + "),sand:"+ sand + "";
+    }
 }

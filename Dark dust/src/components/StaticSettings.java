@@ -13,6 +13,9 @@ public class StaticSettings {
     public static String getPathToPhotos(){
         return "src\\Imges\\BoardGameCards";
     }
+    public static String getPathToPlayerPhotos(){
+        return "src\\Imges\\Characters";
+    }
     
     public static boolean isVisiableAllCards(){
         return false;

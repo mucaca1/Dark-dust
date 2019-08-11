@@ -12,10 +12,18 @@ package controls;
 public class Pair {
     int x;
     int y;
+    boolean isDust;
 
     public Pair(int x, int y) {
         this.x = x;
         this.y = y;
+        this.isDust = false;
+    }
+    
+    public Pair(int x, int y, boolean isDust) {
+        this.x = x;
+        this.y = y;
+        this.isDust = isDust;
     }
 
     @Override
@@ -40,6 +48,10 @@ public class Pair {
 
     public int getY() {
         return y;
+    }
+
+    public boolean isDust() {
+        return isDust;
     }
     
     

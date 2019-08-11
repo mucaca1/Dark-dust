@@ -10,12 +10,16 @@ import components.DirectionEnum;
 import components.ItemToEscapeCard;
 import components.ItemToHelpCard;
 import components.TypeOfCardEnum;
+import controls.GameController;
+import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 
 /**
@@ -34,13 +38,22 @@ public class DarkDustFrame extends JFrame{
     ItemToEscapeCard card8;
     ItemToHelpCard card9;*/
     
+    GameController gameController;
+    DesertCanvas desertCanvas;
+    
     public DarkDustFrame(){
         this.setTitle("Dark Dust");
         this.setSize(1280, 720);            //size
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gameController = new GameController();
+        desertCanvas = new DesertCanvas(gameController);
         
-        this.add(new DesertCanvas());
         
+        this.add(desertCanvas, BorderLayout.CENTER);
+        
+        
+        JButton moveButton = new JButton("Move action");
+        this.add(moveButton, BorderLayout.PAGE_END);
         /*card = new ItemToHelpCard(TypeOfCardEnum.Cave, null);
         card1 = new ItemToEscapeCard(TypeOfCardEnum.Compass, DirectionEnum.Horizontal, new Vec2d(400, 0));
         card2 = new ItemToHelpCard(TypeOfCardEnum.Components, new Vec2d(800, 0));
