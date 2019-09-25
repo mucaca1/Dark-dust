@@ -5,22 +5,19 @@
  */
 package frames;
 
-import com.sun.javafx.geom.Vec2d;
-import components.DirectionEnum;
-import components.ItemToEscapeCard;
-import components.ItemToHelpCard;
-import components.TypeOfCardEnum;
 import controls.GameController;
+import controls.PlayerActionListener;
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
+import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
@@ -40,20 +37,57 @@ public class DarkDustFrame extends JFrame{
     
     GameController gameController;
     DesertCanvas desertCanvas;
+    ItemsCanvas itemsCanvas;
+    PlayerCanvas playerCanvas;
+    
+    JButton moveCharacter;
+    JButton digSand;
+    JButton showTerrain;
+    JButton pickUpItem;
     
     public DarkDustFrame(){
         this.setTitle("Dark Dust");
-        this.setSize(1280, 720);            //size
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);            //size
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameController = new GameController();
         desertCanvas = new DesertCanvas(gameController);
+        //itemsCanvas = new ItemsCanvas();
+        playerCanvas = new PlayerCanvas(gameController);
         
         
-        this.add(desertCanvas, BorderLayout.CENTER);
+        desertCanvas.setMaximumSize(new Dimension(this.getSize().height, this.getSize().width/2));
         
         
-        JButton moveButton = new JButton("Move action");
-        this.add(moveButton, BorderLayout.PAGE_END);
+        Container canvases = new Container();
+        canvases.setLayout(new GridLayout(1,2));
+        canvases.add(desertCanvas);
+        canvases.add(playerCanvas);
+        
+        //this.add(desertCanvas, BorderLayout.CENTER);
+        //this.add(itemsCanvas, BorderLayout.PAGE_START);
+        this.add(canvases, BorderLayout.CENTER);
+        
+        moveCharacter = new JButton("Move");
+        moveCharacter.addActionListener(new PlayerActionListener(gameController, canvases));
+        
+        digSand = new JButton("Dig");
+        digSand.addActionListener(new PlayerActionListener(gameController, canvases));
+        
+        showTerrain = new JButton("Unkeep");
+        showTerrain.addActionListener(new PlayerActionListener(gameController, canvases));
+        
+        pickUpItem = new JButton("Pick up item");
+        pickUpItem.addActionListener(new PlayerActionListener(gameController, canvases));
+        
+        JPanel buttons = new JPanel();
+        buttons.add(moveCharacter);
+        buttons.add(digSand);
+        buttons.add(showTerrain);
+        buttons.add(pickUpItem);
+        this.add(buttons, BorderLayout.PAGE_END);
+        
+        gameController.addButtons(buttons.getComponents());
+        
         /*card = new ItemToHelpCard(TypeOfCardEnum.Cave, null);
         card1 = new ItemToEscapeCard(TypeOfCardEnum.Compass, DirectionEnum.Horizontal, new Vec2d(400, 0));
         card2 = new ItemToHelpCard(TypeOfCardEnum.Components, new Vec2d(800, 0));
@@ -68,9 +102,13 @@ public class DarkDustFrame extends JFrame{
         this.setVisible(true);
         
     }
-    
+
     
     public void paint(Graphics g){
+        playerCanvas.paint(g);
+        desertCanvas.paint(g);
+        
+        
         
         /*BufferedImage img = null;
         try {
@@ -90,4 +128,5 @@ public class DarkDustFrame extends JFrame{
         card8.paint(g);
         card9.paint(g);*/
     }
+
 }

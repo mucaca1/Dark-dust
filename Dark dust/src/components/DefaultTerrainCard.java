@@ -91,7 +91,12 @@ public abstract class DefaultTerrainCard {
     }
     
     public void removeDust(){
-        this.sand--;
+        if(this.sand > 0)
+            this.sand--;
+    }
+    
+    public boolean isRevealed(){
+        return this.isRevealed;
     }
     
     public void paint(Graphics g,int padding, int maxSize){
@@ -130,7 +135,15 @@ public abstract class DefaultTerrainCard {
         return posY;
     }
     
+    public Vec2d getPosition(){
+        return new Vec2d(posX, posY);
+    }
+    
     public String toString(){
         return "Terrain card,(x:" + posX + ",y:" + posY + "),sand:"+ sand + "";
+    }
+    
+    public boolean isDust(){
+        return (this.sand > 0)? true : false; 
     }
 }

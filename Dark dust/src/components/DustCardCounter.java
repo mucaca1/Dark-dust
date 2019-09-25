@@ -16,10 +16,14 @@ public class DustCardCounter{
         this.count = 48;
     }
     
-    private void checkCount(){
-        if(this.count <= 0){
-            //you lose game
-            System.out.println("TO DO: Lose game");
+    public boolean removeCounter(){
+        if(--count < 0){
+            return false;
         }
+        return true;
+    }
+    
+    public void addCounter(){
+        count++;
     }
 }

@@ -11,6 +11,10 @@ import java.awt.Canvas;
  *
  * @author Matej
  */
-public class ItemsCanvas extends Canvas{
+public class SideBoardCanvas extends Canvas{
+
+    public SideBoardCanvas() {
+        super();
+    }
     
 }

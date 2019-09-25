@@ -22,6 +22,15 @@ public class ItemToEscapeCard extends DefaultTerrainCard{
         this.type = type;
         this.direction = direction;
     }
+
+    public DirectionEnum getDirection() {
+        return direction;
+    }
+
+    public TypeOfCardEnum getType() {
+        return type;
+    }
+    
     
     public void paint(){
         

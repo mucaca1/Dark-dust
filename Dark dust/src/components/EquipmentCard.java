@@ -3,14 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package frames;
-
-import java.awt.Canvas;
+package components;
 
 /**
  *
  * @author Matej
  */
-public class ItemsCanvas extends Canvas{
+public class EquipmentCard extends Card{
+    
+    public EquipmentCard(int initCard) {
+        super(initCard);
+    }
     
 }

@@ -26,6 +26,8 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
 import characters.Character;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -34,14 +36,13 @@ import characters.Character;
 public class DesertCanvas extends Canvas implements MouseListener, MouseMotionListener{
     private GameController gc;
     
-    private DefaultTerrainCard selectedTerrain;
+    
     
     public DesertCanvas(GameController gc) {
         super();
         addMouseListener(this);
         addMouseMotionListener(this);
         this.gc = gc;
-        this.selectedTerrain = null;
     }
 
     public void paint(Graphics g){
@@ -55,7 +56,7 @@ public class DesertCanvas extends Canvas implements MouseListener, MouseMotionLi
         }
         for(DefaultTerrainCard t : gc.getTerrain()){
             t.paint(g,maxSize, maxSize-5);
-            if(t.equals(selectedTerrain)){
+            if(t.equals(gc.getSelectedTerrain())){
                 g.setColor(Color.green);
                 g.drawLine(t.getPosX()*maxSize, t.getPosY()*maxSize, t.getPosX()*maxSize + maxSize - 5, t.getPosY()*maxSize + maxSize - 5);
             }
@@ -63,7 +64,15 @@ public class DesertCanvas extends Canvas implements MouseListener, MouseMotionLi
         for(Character c : gc.getPlayers()){
             c.paint(g, maxSize);
         }
+        
+        gc.getStorm().paint(g, maxSize, maxSize);
+        
+        g.drawLine(0, 0, getHeight(), 0);
+        g.drawLine(0, getWidth(), getWidth(), getWidth());
+        g.drawLine(getHeight(), 0, getHeight(), getWidth());
     }    
+    
+
 
     @Override
     public void mouseClicked(MouseEvent me) {
@@ -77,16 +86,24 @@ public class DesertCanvas extends Canvas implements MouseListener, MouseMotionLi
         else{
             maxSize = getWidth()/5;
         }
-        this.selectedTerrain = null;
+        //this.selectedTerrain = null;
         for(DefaultTerrainCard t : gc.getTerrain()){
             if(x > t.getPosX()*maxSize && x < ((t.getPosX()*maxSize) + maxSize - 5)
                     && y >= t.getPosY()*maxSize && y <= (t.getPosY()*maxSize + maxSize - 5)){
                 System.out.println(t.toString());
-                this.selectedTerrain = t;
+                gc.setSelectedTerrain(t);
             }
+        }
+        if(gc.getSelectedTerrain() != null){
+            gc.buttonsPermission(gc.checkActions());
         }
         System.out.println(maxSize);
         System.out.println(me.paramString());
+        if(gc.getSelectedTerrain() instanceof ItemToEscapeCard){
+            ItemToEscapeCard i = (ItemToEscapeCard)gc.getSelectedTerrain();
+            System.out.println(i.getType() + " " + i.getDirection());
+        }
+        
         this.repaint();
     }
 

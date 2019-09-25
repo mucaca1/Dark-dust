@@ -5,12 +5,42 @@
  */
 package frames;
 
+import controls.GameController;
 import java.awt.Canvas;
-import javax.swing.JButton;
+import java.awt.Graphics;
+import characters.Character;
+import java.awt.Dimension;
 
 /**
  *
  * @author Matej
  */
 public class PlayerCanvas extends Canvas{
+    private GameController gc;
+
+    public PlayerCanvas(GameController gc) {
+        super();
+        this.gc = gc;
+    }
+    
+    
+    public void paint(Graphics g){
+        Character ch = gc.getActivePlayer();
+        
+        int x = getWidth()/ 3;
+        int y = x + (getHeight()/6);
+        
+        ch.paintUser(g, x, y);
+        
+        Dimension min = new Dimension();
+        Dimension max = new Dimension();
+        
+        //min.height = x 
+        
+        /*for(Character c : gc.getPlayers()){
+            if (ch != c){
+                c.paintMinuature(g, x, y, x, y);
+            }
+        }*/
+    }
 }
